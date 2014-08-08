@@ -1,0 +1,24 @@
+##' The Distribution of a Sum of Binomials
+##' 
+##' @description
+##' Provides a set of functions for working with the distribution
+##' of a sum of independent binomial random variables, not necessarily
+##' identically distributed.
+##' 
+##' @details
+##' This package performs calculations concerning the
+##' the distribution of the random variable \eqn{Y}, where
+##' \deqn{
+##'   Y = X_1 + \dots + X_m, 
+##' }
+##' and the \eqn{X_j} are distributed as independent 
+##' binomial\eqn{(n_j, p_j)} random variables for 
+##' \eqn{j=1,...,m}.  The \eqn{n_j} and the \eqn{p_j} may all differ.
+##' 
+##' No error-checking is provided yet.
+##' 
+##' @author Jerome V. Braun
+##' @docType package
+##' @name sumbin-package
+
+NULL

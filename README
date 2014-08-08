@@ -1,0 +1,10 @@
+The 'sumbin' package rolls together the basic functions needed
+to compute the distribution of the sum of independent binomial
+random variables, not necessarily identically distributed.
+
+This is one of those computations that is analytically fairly 
+straightforward.  It is just nice to have a completed set of functions
+sometimes.
+
+The usual functions for computing the density, distribution, quantiles,
+and generating random variates are present.
