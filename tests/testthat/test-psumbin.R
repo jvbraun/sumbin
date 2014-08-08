@@ -69,3 +69,8 @@ test_that("within rounding error of Example 4 of Butler and Stephens (1993)", {
   expect_that(U[15+1], equals(0.999935, tolerance=0.000001))  
   expect_that(U[16+1], equals(0.999981, tolerance=0.000001))  
 })
+
+
+test_that("one binomial works", {
+  expect_that(psumbin(3, size=c(5), prob=(.3)), not(throws_error())) 
+})
