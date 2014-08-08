@@ -15,7 +15,7 @@
 ##' binomial\eqn{(n_j, p_j)} random variables for 
 ##' \eqn{j=1,...,m}.  The \eqn{n_j} and the \eqn{p_j} may all differ.
 ##' 
-##' No error-checking is provided yet.
+##' Not much error-checking is provided yet.
 ##' 
 ##' @author Jerome V. Braun
 ##' @docType package
