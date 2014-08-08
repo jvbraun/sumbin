@@ -86,6 +86,13 @@ NULL
  
 dsumbin <- function(x, size, prob) {
   
+  m <- length(size)
+  
+  # Handle the case with only one binomial.
+  
+  if (m==1) return(dbinom(x, size, prob))
+
+  # Handle the case with only two binomials.
   
   U <- rep(0, sum(size)+1)        ### Set up the final result vector now
   
@@ -101,9 +108,11 @@ dsumbin <- function(x, size, prob) {
     
   } 
   
-  if (length(size)==2) return(U[(x+1)])
+  if (m==2) return(U[(x+1)])
+
+  # Handle the remaining cases.
   
-  for (k in 3:length(size)) {
+  for (k in 3:m) {
     
     Y <- U
     Z <- dbinom(0:size[k], size[k], prob[k])
