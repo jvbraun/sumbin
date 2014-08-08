@@ -101,6 +101,8 @@ dsumbin <- function(x, size, prob) {
     
   } 
   
+  if (length(size)==2) return(U[(x+1)])
+  
   for (k in 3:length(size)) {
     
     Y <- U
@@ -160,6 +162,11 @@ psumbin <- function(q, size, prob) {
 ##' @export
 
 qsumbin <- function(p, size, prob) {
+  
+  # Check arguments.
+  
+  if (!all(0 <= prob & prob <=1))
+    stop("elements of prob must be in the range [0,1]")
   
   # First, get the entire cumulative distribution function.
   
