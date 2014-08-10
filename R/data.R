@@ -21,9 +21,9 @@
 #' Braun, J.V. (2007) Exhibit C:  Statistical and probabilistic analysis 
 #' of representation of Hispanics and Asian & Pacific Islanders in the 
 #' Yolo County grand jury from 1985 to 2004.  
-#' The People of the State of California vs. Michael Raquel, et al., 
+#' \emph{The People of the State of California vs. Michael Raquel, et al., 
 #' Case No. 01-1577, Superior Court of the State of California 
-#' in and for the County of Yolo.
+#' in and for the County of Yolo.}
 #' 
 #' @docType data
 #' @keywords datasets
