@@ -1,0 +1,165 @@
+% \VignetteIndexEntry{Sum of non-identical independent binomial random variables}
+% \VignetteDepends{}
+% \VignetteKeyword{}
+% \VignetteEngine{knitr::knitr}
+
+\documentclass{article}
+
+\let\proglang=\textsf
+\let\pkg=\textbf
+
+\makeatletter
+\def\@biblabel#1{}
+\makeatother
+
+\title{A short vignette showing the use of the \pkg{sumbin} package
+for evaluating the distribution of a sum of binomial random variables}
+\author{Jerome V. Braun}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Installing the \textbf{sumbin} \textsf{R} package}
+
+\pkg{sumbin} requires \proglang{R} version 3.1.1 or greater.
+The package was developed on the Windows operating system.
+The CRAN version of \pkg{sumbin} can be installed
+in an \proglang{R} console with:
+<<install-cran, eval=FALSE>>=
+install.packages("sumbin")
+@
+
+\noindent
+You can then load the package with:
+<<load-package,results="hide">>=
+library(sumbin)
+@
+
+\noindent
+You can read the help files and access this vignette again with:
+<<help, eval=FALSE>>=
+?"sumbin-package"
+?sumbin
+help(package = "sumbin")
+vignette("sumbin-vignette")
+@
+
+\section{Yolo County grand jury dataset}
+
+Yolo County grand jurors are selected in a multi-step process from
+the population of eligible residents of Yolo county.  Eligible residents
+must first apply (and are then part of the grand jury applicant 
+pool).  A set
+of grand jury nominees are chosen from this
+applicant pool upon vetting by the Court (and are then
+part of the grand jury nominee pool).  Finally, a set of 
+grand jurors are chosen from the grand jury nominee pool upon further
+examination by the Court.
+
+\bigskip\noindent
+The composition of the Yolo County grand jury was challenged in court
+in 2007 on Sixth and Fourteenth Amendment grounds.
+Specifically, it was alleged that Hispanics were not fairly represented 
+in the Yolo County grand jury.
+
+\bigskip\noindent
+The sample dataset includes information over time about the population of 
+eligible residents of Yolo count, the composition of the grand jury nominee pools, and the grand jury pools.  Estimation of the eligible population, the proportion of population that was Hispanic, and the composition of the grand jury nominee and grand jury pools is discussed in detail in 
+\cite{braun:2007}.
+
+\bigskip\noindent
+You can load the included sample data set and access the included
+help using:
+<<data>>=
+data(YoloGrandJury)
+@
+
+\bigskip\noindent
+The following plot displays the proportion of Hispanics among the
+eligible population of Yolo County over time (solid line), as well
+as the composition of the Yolo County grand jury over time (open circles):
+
+<<plot, echo=FALSE, fig.height=5, fig.width=5>>=
+with(YoloGrandJury, {
+  plot(Juror$Year, Juror$Hispanic/Juror$Total, ylim=c(0,.3),
+       xlab='Year', ylab='Proportion Hispanic', axes=FALSE)
+  lines(Eligible$Year, Eligible$Hispanic/Eligible$Total)
+  box()
+  axis(side=1)
+  axis(side=2, las=2)
+})
+@
+
+\bigskip\noindent
+If the Yolo County grand jury is fair and representative, then we can
+consider the Hispanic composition of the grand jury each year to 
+be a draw from a binomial distribution.   Both the size of the binomial
+distribution and the success probabilities vary from year to year in
+this case.
+
+<<calcs>>=
+# Calculate the probability of a random draw of a Hispanic grand
+# juror from the population of eligible residents of Yolo County.
+prob <- with(YoloGrandJury$Eligible, Hispanic / Total)
+
+# Set the number of trials each year for the grand jury pools.
+size  <- YoloGrandJury$Juror$Total
+
+# Finally, calculate the total number of Hispanic grand jurors
+# seated over the time frame considered.
+Hispanics <- sum(YoloGrandJury$Juror$Hispanic)
+@
+
+\bigskip\noindent
+The total number of Hispanic grand jurors seated over the time
+frame of \Sexpr{length(size)} years
+was \Sexpr{Hispanics} out of  a total of \Sexpr{sum(size)} 
+grand jurors seated.  The distribution of this sum has no simple 
+analytical
+form, since the success probabilities differ over time.
+
+\bigskip\noindent
+We may be interested in the probability under this model of 
+seeing \Sexpr{Hispanics} or fewer Hispanics across the time frame.  This 
+can be obtained using \textbf{psumbin} by:
+<<psumbin>>=
+# The one-sided p-value under this model.
+psumbin(Hispanics, size=size, prob=prob)
+@
+
+\bigskip\noindent
+Note that this is an aggregate measure which disregards the actual
+configuration of the grand jury pools over time.  However, it seems
+that there is some evidence that the representation over this time
+frame of 
+Hispanics in the Yolo County grand jury is not representative of 
+the underlying population of eligible residents.  A more detailed 
+analysis was carried out in \cite{braun:2007}.
+
+\bigskip\noindent
+Depending upon the situation, it might be of interest to plot the 
+distribution of the total number of Hispanics expected
+under fair and representative selection using \textbf{dsumbin}:
+<<dsumbin>>=
+plot(0:394, dsumbin(0:394, size=size, prob=prob), type='l',
+     xlab='Total number of Hispanics', ylab='Density')
+@
+
+\bigskip\noindent
+For simulation purposes, it might be useful to generate samples
+from the distribution using \textbf{rsumbin}.   This could 
+be done as follows:
+<<rsumbin, eval=FALSE>>=
+# Generate a sample of size 1000 from the distribution.
+rsumbin(1000, size=size, prob=prob)
+@
+
+
+
+\bibliographystyle{apalike2}
+\bibliography{refs}
+
+\end{document}

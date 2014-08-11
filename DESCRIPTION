@@ -8,5 +8,7 @@ Description: Density, distribution function, quantile function, and random
     generation for the distribution of a sum of binomials.
 License: MIT + file LICENSE
 Suggests:
-    testthat
+    testthat,
+    knitr
 LazyData: true
+VignetteBuilder: knitr
